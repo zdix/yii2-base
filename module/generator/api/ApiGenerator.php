@@ -84,29 +84,6 @@ class ApiGenerator extends Generator
                 $this->getControllerFile(),
                 $this->render('controller.php')
             );
-
-            //generate service files
-            foreach ($this->services as $service)
-            {
-                $this->service = $service;
-                $this->methodIDs = $this->getMethodsWillGeneratedInService($this->methods[$service]);
-
-                if ($this->methodIDs)
-                {
-                    echo "The following methods will be generated to this service:" . "\n";
-
-                    foreach ($this->methodIDs as $method)
-                    {
-                        echo "[" . $service . "]::" . $method . "\n";
-                    }
-                    echo "\n";
-                }
-                $files[] = new CodeFile(
-                    $this->getServiceFile(),
-                    $this->renderServiceContent()
-                );
-                
-            }
         }
 
         return $files;
@@ -192,7 +169,7 @@ class ApiGenerator extends Generator
             {
                 $services[$type] = [];
             }
-
+            
             $service_function_list = is_array($response) ? $response : [$response];
             foreach ($service_function_list as $service_function)
             {

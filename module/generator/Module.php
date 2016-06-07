@@ -30,5 +30,5 @@ class Module extends BaseModule implements BootstrapInterface
     {
         return 'dix\base\module\generator\controller';
     }
-
 }
+
