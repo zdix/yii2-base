@@ -1,0 +1,28 @@
+{
+    "name": "dix/yii2-base",
+    "require": {
+        "php": ">=5.4.0",
+        "yiisoft/yii2": "*",
+        "guzzlehttp/guzzle": "6.*"
+    },
+    "require-dev": {
+        "yiisoft/yii2-codeception": "*",
+        "yiisoft/yii2-debug": "*",
+        "yiisoft/yii2-gii": "*",
+        "yiisoft/yii2-faker": "*",
+        "guzzlehttp/guzzle": "6.*",
+        "predis/predis": "1.1.*@dev"
+    },
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "dd",
+            "email": "dd@sinfere.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "dix\\base\\": ""
+        }
+    }
+}
