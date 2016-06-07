@@ -163,6 +163,20 @@ class DXUtil extends \yii\base\Object
         return $new_array;
     }
 
+    public static function formatRawModel($item, $model_api_sub_class, $keys = null)
+    {
+        $get_attributes_func = "$model_api_sub_class::attributeTypes";
+        if (!is_callable($get_attributes_func))
+        {
+            return null;
+        }
+
+        $attributes = call_user_func($get_attributes_func);
+        $keys = $keys ? $keys : array_keys($attributes);
+
+        return self::processModel($item, $keys, $attributes);
+    }
+
 
     public static function processModel($model, $keys, $types)
     {
