@@ -76,7 +76,7 @@ class Redis
     }
 
 
-    public static function get($key, $func)
+    public static function get($key, $func, $expire_seconds = 3600)
     {
         $redis = Redis::client();
         $data = $redis->get($key);
@@ -91,7 +91,7 @@ class Redis
                 $data = $func();
             }
 
-            $redis->set($key, DXUtil::jsonEncode($data));
+            $redis->setex($key, $expire_seconds, DXUtil::jsonEncode($data));
         }
 
         return $data;
