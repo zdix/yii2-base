@@ -370,6 +370,7 @@ class DXUtil extends \yii\base\Object
 
         $redis->HINCRBY($key, 'count', 1);
         $redis->HSET($key, 'average_time', $average_time);
+        $redis->HSET($key, 'last_time', $time);
         if ($time > $max_time)
         {
             $redis->HSET($key, 'max_time', $time);
