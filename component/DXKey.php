@@ -13,13 +13,13 @@ class DXKey extends \yii\base\Object
     public static function getKeyOfAction($action)
     {
         $date = date('Y-m-d', time());
-        return "api.stat.$date.$action";
+        return "stat.$date.$action";
     }
 
     public static function getKeyOfActionTimeRank()
     {
         $date = date('Y-m-d', time());
-        return "api.stat.$date.rank";
+        return "stat.$date.rank";
     }
 
     public static function getKeyOfPhoneVerificationCode($phone)
