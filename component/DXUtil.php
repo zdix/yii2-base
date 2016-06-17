@@ -359,25 +359,26 @@ class DXUtil extends \yii\base\Object
         $time = self::getElapsedTime();
         $time = intval($time * 1000);
 
-        $key = DXKey::getKeyOfAction($route);
+        $key_action = DXKey::getKeyOfAction($route);
+        $key_rank = DXKey::getKeyOfActionTimeRank();
 
         $redis = Redis::client();
-        $count = intval($redis->HGET($key, 'count'));
-        $average_time = intval($redis->HGET($key, 'average_time'));
-        $max_time = intval($redis->HGET($key, 'max_time'));
+
+        $stat = $redis->HGETALL($key_action);
+        $count = intval($stat['count']);
+        $average_time = intval($stat['average_time']);
+        $max_time = intval($stat['max_time']);
 
         $average_time = intval(($average_time * $count + $time) * 1.0 / ($count + 1));
 
-        $redis->HINCRBY($key, 'count', 1);
-        $redis->HSET($key, 'average_time', $average_time);
-        $redis->HSET($key, 'last_time', $time);
-        if ($time > $max_time)
-        {
-            $redis->HSET($key, 'max_time', $time);
-        }
-
-        $key_rank = DXKey::getKeyOfActionTimeRank();
-        $redis->zadd($key_rank, [ $key => $average_time]);
+        $redis->pipeline()
+            ->HINCRBY($key_action, 'count', 1)
+            ->HSET($key_action, 'average_time', $average_time)
+            ->HSET($key_action, 'last_time', $time)
+            ->HSET($key_action, 'max_time', $time > $max_time ? $time : $max_time)
+            ->zadd($key_rank, [ $key_action => $average_time])
+            ->execute()
+        ;
     }
 
     public static function isMobile() {
