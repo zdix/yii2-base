@@ -74,4 +74,26 @@ class Redis
         $redis = self::client();
         $redis->del($key);
     }
+
+
+    public static function get($key, $func)
+    {
+        $redis = Redis::client();
+        $data = $redis->get($key);
+        if ($data)
+        {
+            $data = json_decode($data, true);
+        }
+        else
+        {
+            if (is_callable($func))
+            {
+                $data = $func();
+            }
+
+            $redis->set($key, DXUtil::jsonEncode($data));
+        }
+
+        return $data;
+    }
 }
