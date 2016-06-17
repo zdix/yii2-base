@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ef2a11419994b69441ca512263623a14",
-    "content-hash": "402d9f5eba733cea2fe43d282d1a78e2",
+    "hash": "76e90a0adb34546a9e1e86d18efabd29",
+    "content-hash": "ccd9acb6f221aa6fa510a61a392b0f67",
     "packages": [
         {
             "name": "bower-asset/jquery",
@@ -256,12 +256,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "6a37496c2b7855f5c88cac89c5f56a07e326d63c"
+                "reference": "eeff956f2c60d3283869d0874353794dedb26865"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/6a37496c2b7855f5c88cac89c5f56a07e326d63c",
-                "reference": "6a37496c2b7855f5c88cac89c5f56a07e326d63c",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/eeff956f2c60d3283869d0874353794dedb26865",
+                "reference": "eeff956f2c60d3283869d0874353794dedb26865",
                 "shasum": ""
             },
             "require": {
@@ -310,7 +310,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2016-06-04 22:16:20"
+            "time": "2016-06-12 23:58:31"
         },
         {
             "name": "guzzlehttp/promises",
@@ -369,12 +369,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "7e9749008f75ab798168371cf3f6a2a36850576a"
+                "reference": "58828615f7bb87013ce6365e9b1baa08580c7fc8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/7e9749008f75ab798168371cf3f6a2a36850576a",
-                "reference": "7e9749008f75ab798168371cf3f6a2a36850576a",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/58828615f7bb87013ce6365e9b1baa08580c7fc8",
+                "reference": "58828615f7bb87013ce6365e9b1baa08580c7fc8",
                 "shasum": ""
             },
             "require": {
@@ -419,7 +419,7 @@
                 "stream",
                 "uri"
             ],
-            "time": "2016-06-05 19:42:18"
+            "time": "2016-06-07 17:55:54"
         },
         {
             "name": "predis/predis",
@@ -531,12 +531,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "52bc85839480997f877cdc60eba68f595c5c7256"
+                "reference": "38d2f94432a04b012265f939ab35cc13c480348f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/52bc85839480997f877cdc60eba68f595c5c7256",
-                "reference": "52bc85839480997f877cdc60eba68f595c5c7256",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/38d2f94432a04b012265f939ab35cc13c480348f",
+                "reference": "38d2f94432a04b012265f939ab35cc13c480348f",
                 "shasum": ""
             },
             "require": {
@@ -617,7 +617,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2016-06-06 19:06:36"
+            "time": "2016-06-12 22:22:38"
         },
         {
             "name": "yiisoft/yii2-composer",
@@ -838,12 +838,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-bootstrap.git",
-                "reference": "61ff14445779b225baa8e60cf4eddbc46cc14504"
+                "reference": "cfe46a2cf1a6b0c24014d7673a00d48ead790ea9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap/zipball/61ff14445779b225baa8e60cf4eddbc46cc14504",
-                "reference": "61ff14445779b225baa8e60cf4eddbc46cc14504",
+                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap/zipball/cfe46a2cf1a6b0c24014d7673a00d48ead790ea9",
+                "reference": "cfe46a2cf1a6b0c24014d7673a00d48ead790ea9",
                 "shasum": ""
             },
             "require": {
@@ -880,7 +880,7 @@
                 "bootstrap",
                 "yii2"
             ],
-            "time": "2016-04-18 20:34:24"
+            "time": "2016-06-12 22:19:44"
         },
         {
             "name": "yiisoft/yii2-codeception",
@@ -1027,12 +1027,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-gii.git",
-                "reference": "ad215b7f8c679e11e70ff3dc29c7306f28cef576"
+                "reference": "2385e71733d567b72d4e46ddde77f97904448c14"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-gii/zipball/ad215b7f8c679e11e70ff3dc29c7306f28cef576",
-                "reference": "ad215b7f8c679e11e70ff3dc29c7306f28cef576",
+                "url": "https://api.github.com/repos/yiisoft/yii2-gii/zipball/2385e71733d567b72d4e46ddde77f97904448c14",
+                "reference": "2385e71733d567b72d4e46ddde77f97904448c14",
                 "shasum": ""
             },
             "require": {
@@ -1072,14 +1072,12 @@
                 "gii",
                 "yii2"
             ],
-            "time": "2016-05-12 20:54:42"
+            "time": "2016-06-15 11:31:00"
         }
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "predis/predis": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

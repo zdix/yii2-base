@@ -365,9 +365,9 @@ class DXUtil extends \yii\base\Object
         $redis = Redis::client();
 
         $stat = $redis->HGETALL($key_action);
-        $count = intval($stat['count']);
-        $average_time = intval($stat['average_time']);
-        $max_time = intval($stat['max_time']);
+        $count = isset($stat['count']) ? intval($stat['count']) : 0;
+        $average_time = isset($stat['average_time']) ? intval($stat['average_time']) : 0;
+        $max_time = isset($stat['max_time']) ? intval($stat['max_time']) : 0;
 
         $average_time = intval(($average_time * $count + $time) * 1.0 / ($count + 1));
 
