@@ -90,14 +90,14 @@ foreach ($generator->getActionIDs() as $action) { ?>
     }
 
     $responses = $generator->getResponse($action);
-    echo $space . '$data = null;' . $break_line;
+    echo $space . '$_data = null;' . $break_line;
     if (is_array($responses))
     {
         foreach ($responses as $key => $method)
         {
             if ($key != 'null')
             {
-                echo $space . '$data[\'' . $key . '\'] = ' . DXUtil::getServiceMethodCall($method) . ";" . $break_line;
+                echo $space . '$_data[\'' . $key . '\'] = ' . DXUtil::getServiceMethodCall($method) . ";" . $break_line;
             }
             else
             {
@@ -109,11 +109,11 @@ foreach ($generator->getActionIDs() as $action) { ?>
     else
     {
         $method = $responses;
-        echo $space . '$data = ' . DXUtil::getServiceMethodCall($method) . ";" . $break_line;
+        echo $space . '$_data = ' . DXUtil::getServiceMethodCall($method) . ";" . $break_line;
     }
     echo $break_line;
 
-    echo $space . '$this->finishSuccess($data);';
+    echo $space . '$this->finishSuccess($_data);';
     echo $break_line;
     ?>
     }
