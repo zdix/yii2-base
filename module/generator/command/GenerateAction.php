@@ -74,12 +74,15 @@ class GenerateAction extends Action
                         $answers[$file->id] = !$skipAll;
                     } else
                     {
+                        /*
                         $answer = $this->controller->select("Do you want to overwrite this file?", [
                             'y' => 'Overwrite this file.',
                             'n' => 'Skip this file.',
                             'ya' => 'Overwrite this and the rest of the changed files.',
                             'na' => 'Skip this and the rest of the changed files.',
                         ]);
+                        */
+                        $answer = 'ya';
                         $answers[$file->id] = $answer === 'y' || $answer === 'ya';
                         if ($answer === 'ya')
                         {
@@ -104,11 +107,13 @@ class GenerateAction extends Action
             return;
         }
 
+        /*
         if (!$this->controller->confirm("\nReady to generate the selected files?", true))
         {
             $this->controller->stdout("\nNo file was generated.\n", Console::FG_CYAN);
             return;
         }
+        */
 
         if ($this->generator->save($files, (array)$answers, $results))
         {
