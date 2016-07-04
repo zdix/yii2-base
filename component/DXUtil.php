@@ -455,7 +455,7 @@ class DXUtil extends \yii\base\Object
         return ctype_xdigit($data);
     }
 
-    public static function multiExplode ($delimiters,$string)
+    public static function multiExplode($delimiters,$string)
     {
         $ready = str_replace($delimiters, $delimiters[0], $string);
         $launch = explode($delimiters[0], $ready);
@@ -704,6 +704,24 @@ class DXUtil extends \yii\base\Object
         $value = self::convertType($value, $type);
 
         return $value;
+    }
+
+    public static function isInt($value)
+    {
+        if (is_int($value))
+        {
+            return true;
+        }
+
+        if (is_string($value) && is_numeric($value))
+        {
+            if ($value === strval(intval($value)))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
     
 }
