@@ -723,5 +723,54 @@ class DXUtil extends \yii\base\Object
 
         return false;
     }
+
+    public static function generateValidUid($uid_generator_func, $uid_valid_check_func, $uid_valid_func, $try_max_count = 9)
+    {
+        $uid = null;
+        $try_count = 0;
+
+        // try to max of 3 times to register
+        while (true)
+        {
+            $try_count++;
+            if ($try_count > $try_max_count)
+            {
+                return false;
+            }
+
+            // generate an available uid
+            $try_generate_uid_count = 0;
+            $should_start_new_try = false;
+            while (true)
+            {
+                $uid = $uid_generator_func();
+                if (!$uid_valid_check_func($uid))
+                {
+                    break;
+                }
+
+                $try_generate_uid_count++;
+                if ($try_generate_uid_count >= $try_max_count)
+                {
+                    $should_start_new_try = true;
+                    break;
+                }
+            }
+
+            if ($should_start_new_try)
+            {
+                continue;
+            }
+
+            // lock uid
+            if (Redis::lock('company.uid', $uid))
+            {
+                return $uid_valid_func($uid);
+            }
+        }
+
+
+        return false;
+    }
     
 }
