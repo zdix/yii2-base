@@ -7,7 +7,7 @@ in composer.json
     "repositories": {
         "0": {
             "type": "vcs",
-            "url": "git@github.com:sinfere/yii2-base.git"
+            "url": "git@github.com:zdix/yii2-base.git"
         },
     },
     "require": {
