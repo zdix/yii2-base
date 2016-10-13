@@ -9,5 +9,4 @@ class ServiceErrorExistsException extends ServiceException
     {
         parent::__construct(ServiceException::ERROR_EXIST, $message, $data);
     }
-
 }

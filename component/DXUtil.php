@@ -772,5 +772,61 @@ class DXUtil extends \yii\base\Object
 
         return false;
     }
+
+    /**
+     * @param array $hosts
+     * @param bool $enable_dix_permit
+     */
+    public static function cors($hosts, $enable_dix_permit = false)
+    {
+        if (isset($_SERVER['HTTP_ORIGIN']) )
+        {
+            $origin = trim($_SERVER['HTTP_ORIGIN']);
+            $host = trim($origin, 'http://');
+            $host = trim($host, 'https://');
+            $host = trim($host, 'www');
+
+            $has_dix = false;
+
+            if ($enable_dix_permit)
+            {
+                if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']))
+                {
+                    $access_control_request_headers = $_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS'];
+                    if (strpos(strtolower($access_control_request_headers), 'dix') !== -1)
+                    {
+                        $has_dix = true;
+                    }
+                }
+                if (isset($_SERVER['HTTP_DIX']) || isset($_SERVER['DIX']))
+                {
+                    $has_dix = true;
+                }
+            }
+
+            if (in_array($host, $hosts) || $has_dix)
+            {
+                header("Access-Control-Allow-Origin: ${origin}");
+                header('Access-Control-Allow-Credentials: true');
+                header('Access-Control-Max-Age: 86400');    // cache for 1 day
+            }
+        }
+
+        // Access-Control headers are received during OPTIONS requests
+        if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS')
+        {
+            if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']))
+            {
+                header("Access-Control-Allow-Methods: POST, OPTIONS");
+            }
+
+            if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']))
+            {
+                header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
+            }
+
+            exit(0);
+        }
+    }
     
 }
