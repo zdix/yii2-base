@@ -20,23 +20,6 @@ class BaseController extends Controller
         return $ok;
     }
 
-    public function finish($data)
-    {
-        header('Content-type:application/json;charset=UTF-8');
-
-    	die(DXUtil::jsonEncode($data));
-    }
-
-    public function finishData($data)
-    {
-        $data['code'] = 0;
-        if ($data)
-        {
-            $data['data'] = $data;
-        }
-        $this->finish($data);
-    }
-
     public function finishError($code, $message, $extra = [])
     {
         $data['code'] = intval($code);
@@ -47,6 +30,23 @@ class BaseController extends Controller
         }
 
         $this->finish($data);
+    }
+
+    public function finishSuccess($success)
+    {
+        $data['code'] = 0;
+        if ($success)
+        {
+            $data['data'] = $success;
+        }
+        $this->finish($data);
+    }
+
+    public function finish($data)
+    {
+        // DXUtil::doActionStat($this->route);
+        header('Content-type:application/json;charset=UTF-8');
+        die(json_encode($data));
     }
 
     public function redis()
