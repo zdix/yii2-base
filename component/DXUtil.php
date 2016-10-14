@@ -828,5 +828,34 @@ class DXUtil extends \yii\base\Object
             exit(0);
         }
     }
+
+    /**
+     * @param \yii\db\ActiveQuery $query
+     * @param string $col
+     * @return array
+     */
+    public static function getSingleColumnValueListFromQuery($query, $col = 'id')
+    {
+        $id_list = [];
+
+        $i = 0;
+        while (true)
+        {
+            $db_id_list = $query->offset($i * 20)->limit(20)->select($col)->asArray()->all();
+            if (empty($db_id_list))
+            {
+                break;
+            }
+
+            foreach ($db_id_list as $db_id)
+            {
+                $id_list[] = intval($db_id[$col]);
+            }
+
+            $i++;
+        }
+
+        return array_unique($id_list);
+    }
     
 }
