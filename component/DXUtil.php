@@ -312,38 +312,6 @@ class DXUtil extends \yii\base\Object
         return $new_array;
     }
 
-    /**
-     * @return \Predis\Client $redis
-     */
-    public static function redis()
-    {
-        return self::redisClient();
-    }
-
-    /**
-     * @return \Predis\Client $redis
-     */
-    public static function redisClient()
-    {
-        return Redis::client();
-    }
-
-    /**
-     * @return \Predis\Client $redis
-     */
-    public static function redisPubSubClient()
-    {
-        static $redis = null;
-
-        if ($redis === null)
-        {
-            $redis = Redis::createClient();
-        }
-
-        return $redis;
-    }
-
-
     public static function time()
     {
         return RUN_START_TIME_INT;
@@ -364,7 +332,7 @@ class DXUtil extends \yii\base\Object
 
         $redis = Redis::client();
 
-        $stat = $redis->HGETALL($key_action);
+        $stat = $redis->hgetall($key_action);
         $count = isset($stat['count']) ? intval($stat['count']) : 0;
         $average_time = isset($stat['average_time']) ? intval($stat['average_time']) : 0;
         $max_time = isset($stat['max_time']) ? intval($stat['max_time']) : 0;
@@ -372,56 +340,33 @@ class DXUtil extends \yii\base\Object
         $average_time = intval(($average_time * $count + $time) * 1.0 / ($count + 1));
 
         $redis->pipeline()
-            ->HINCRBY($key_action, 'count', 1)
-            ->HSET($key_action, 'average_time', $average_time)
-            ->HSET($key_action, 'last_time', $time)
-            ->HSET($key_action, 'max_time', $time > $max_time ? $time : $max_time)
+            ->hincrby($key_action, 'count', 1)
+            ->hset($key_action, 'average_time', $average_time)
+            ->hset($key_action, 'last_time', $time)
+            ->hset($key_action, 'max_time', $time > $max_time ? $time : $max_time)
             ->zadd($key_rank, [ $key_action => $average_time])
             ->execute()
         ;
     }
 
-    public static function isMobile() {
-        $user_agent = $_SERVER['HTTP_USER_AGENT'];
-        $mobile_agents = Array("240x320","acer","acoon","acs-","abacho","ahong","airness","alcatel","amoi",
-            "android","anywhereyougo.com","applewebkit/525","applewebkit/532","asus","audio","au-mic","avantogo",
-            "becker","benq","bilbo","bird","blackberry","blazer","bleu","cdm-","compal","coolpad","danger","dbtel",
-            "dopod","elaine","eric","etouch","fly ","fly_","fly-","go.web","goodaccess","gradiente","grundig","haier",
-            "hedy","hitachi","htc","huawei","hutchison","inno","ipad","ipaq","ipod","jbrowser","kddi","kgt","kwc","lenovo",
-            "lg ","lg2","lg3","lg4","lg5","lg7","lg8","lg9","lg-","lge-","lge9","longcos","maemo","mercator","meridian","micromax",
-            "midp","mini","mitsu","mmm","mmp","mobi","mot-","moto","nec-","netfront","newgen","nexian","nf-browser","nintendo","nitro",
-            "nokia","nook","novarra","obigo","palm","panasonic","pantech","philips","phone","pg-","playstation","pocket","pt-","qc-","qtek",
-            "rover","sagem","sama","samu","sanyo","samsung","sch-","scooter","sec-","sendo","sgh-","sharp","siemens","sie-","softbank","sony",
-            "spice","sprint","spv","symbian","tablet","talkabout","tcl-","teleca","telit","tianyu","tim-","toshiba","tsm","up.browser","utec",
-            "utstar","verykool","virgin","vk-","voda","voxtel","vx","wap","wellco","wig browser","wii","windows ce","wireless","xda","xde","zte");
-        $is_mobile = false;
-        foreach ($mobile_agents as $device) {
-            if (stristr($user_agent, $device)) {
-                $is_mobile = true;
-                break;
-            }
-        }
-        return $is_mobile;
-    }
-
     public static function log($title, $data, $key = 'log')
     {
         $log = [
-            'time' => timeFormat(time()),
+            'time' => self::timeFormat(time()),
             'title' => $title,
             'data' => $data
         ];
         $redis = Redis::client();
         $redis->lpush($key, json_encode($log));
+        $redis->ltrim($key, 0, 10000);
     }
 
     public static function consoleLog($content)
     {
         if (defined('IN_CONSOLE_APP'))
         {
-            echo timeFormat(time()) . ' ' . strval($content) . "\n";
+            echo self::timeFormat(time()) . ' ' . strval($content) . "\n";
         }
-
     }
 
     public static function runClientAction($action, $params)
@@ -453,34 +398,6 @@ class DXUtil extends \yii\base\Object
     public static function isHex($data)
     {
         return ctype_xdigit($data);
-    }
-
-    public static function multiExplode($delimiters,$string)
-    {
-        $ready = str_replace($delimiters, $delimiters[0], $string);
-        $launch = explode($delimiters[0], $ready);
-        return  $launch;
-    }
-
-    public static function convertDecToBinArrayByKeys ($dec, array $keys)
-    {
-        $dec = intval($dec);
-        $result = [];
-        $length = count($keys);
-        for ($i = 0; $i < $length; $i ++)
-        {
-            $key = $keys[$i];
-            $bitValue = pow(2, $i);
-            if (($dec&$bitValue) === $bitValue)
-            {
-                $result[$key] = 1;
-            }
-            else
-            {
-                $result[$key] = 0;
-            }
-        }
-        return $result;
     }
 
     public static function doTransaction($user_func)
@@ -857,5 +774,9 @@ class DXUtil extends \yii\base\Object
 
         return array_unique($id_list);
     }
-    
+
+    public static function getHashOfArgs()
+    {
+        return md5(self::jsonEncode(func_get_args()));
+    }
 }
