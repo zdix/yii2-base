@@ -72,9 +72,11 @@ class PhoneVerification extends \yii\base\Object
     public static function getGuestId()
     {
         $request = new Request();
-        $ip = !is_null($request->getUserIP()) ? $request->getUserIP() : "";
+        $user_ip = !is_null($request->getUserIP()) ? $request->getUserIP() : "";
 
         $request_headers = $request->getHeaders();
+
+        $ip = isset($request_headers['X-Real-IP']) ? $request_headers['X-Real-IP'] : $user_ip;
         $agent = $request_headers['user-agent'];
         $language = $request_headers['accept-language'];
         $guest_id = sprintf("%s.%s.%s", $ip, $agent, $language);
