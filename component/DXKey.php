@@ -39,6 +39,10 @@ class DXKey extends \yii\base\Object
         return "phone.$phone.verification.code.send.time";
     }
 
+    public static function getKeyOfVCodeApiAccessTime($guest_id)
+    {
+        return "ac.guest.$guest_id.vcode.api.access.time";
+    }
 
 
 }
