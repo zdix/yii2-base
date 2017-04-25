@@ -44,7 +44,20 @@ class PasswordHash
     public static function create_hash($password)
     {
         // format: algorithm:iterations:salt:hash
-        $salt = base64_encode(mcrypt_create_iv(PBKDF2_SALT_BYTES, MCRYPT_DEV_URANDOM));
+        // $salt = base64_encode(random_bytes(PBKDF2_SALT_BYTES));
+
+        $salt_raw = null;
+        if (\function_exists('random_bytes')) {
+            try {
+                $salt_raw = \random_bytes(PBKDF2_SALT_BYTES);
+            } catch (\Exception $e) {
+                $salt_raw = false;
+            }
+        } else {
+            $salt_raw = \mcrypt_create_iv(PBKDF2_SALT_BYTES, MCRYPT_DEV_URANDOM);
+        }
+        $salt = base64_encode($salt_raw);
+
         return PBKDF2_HASH_ALGORITHM . ":" . PBKDF2_ITERATIONS . ":" . $salt . ":" .
         base64_encode(self::pbkdf2(
             PBKDF2_HASH_ALGORITHM,
