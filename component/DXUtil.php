@@ -779,4 +779,8 @@ class DXUtil extends \yii\base\Object
     {
         return md5(self::jsonEncode(func_get_args()));
     }
+
+    public function isAssocArray(array $array) {
+        return count(array_filter(array_keys($array), 'is_string')) > 0;
+    }
 }
